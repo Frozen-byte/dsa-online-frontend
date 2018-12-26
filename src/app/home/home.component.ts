@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { GruppenService, GruppeSelectItem } from "../shared/gruppen.service";
 
 @Component({
   selector: 'app-home',
@@ -53,11 +56,20 @@ export class HomeComponent implements OnInit {
       done: false
     }
 
-  ]
+  ];
+  public groups: Observable<GruppeSelectItem[]> = this.gruppenService.getGroups();
 
-  constructor() { }
+  constructor(
+    private gruppenService: GruppenService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+
   }
 
+  public selectGroup(groupItem: GruppeSelectItem) {
+    this.gruppenService.setCurrentGroup(groupItem.value);
+    this.router.navigate(["/gruppen"]);
+  }
 }

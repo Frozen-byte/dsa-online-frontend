@@ -152,6 +152,7 @@ registerLocaleData(localeDe, 'de');
     BrowserModule, DialogModule, MessageModule, PanelModule, GrowlModule, ReactiveFormsModule, FormsModule, MenuModule, TabMenuModule,
     HttpClientModule, ButtonModule, CheckboxModule, TablesModule, DropdownModule, EditDsaDateModule,
     AccordionModule, PdfViewerModule, InputTextModule, InputTextareaModule, TooltipModule, TableModule,
+    CardModule,
     MonacoEditorModule.forRoot(monacoConfig),
     RouterModule.forRoot(
       appRoutes,

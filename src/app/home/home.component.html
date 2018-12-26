@@ -1,14 +1,11 @@
-<div class="welcome">Willkommen bei DSA-Online</div>
-<div class="info">Wähle einen Menüpunkt aus um anzufangen</div>
-<!--<div>Roadmap</div>-->
+<h1>Willkommen bei DSA-Online</h1>
+<h2>Wähle deine Gruppe aus um anzufangen</h2>
+<div>
+  <ng-container *ngFor="let groupItem of groups | async">
+    <p-card header="{{groupItem.label || 'Unbekannt'}}" (click)="selectGroup(groupItem)">
+     <img alt="group-teaser" src="http://placekitten.com/360/154" [style.width.%]="100">
+    </p-card>
+  </ng-container>
 
 
-<!--<div *ngFor="let task of roadMap" class="ui-g">-->
-  <!--<span>-->
-    <!--<i class="fa fa-check fa-1x" *ngIf="task.done;else notDone"></i>-->
-    <!--{{task.label}}</span>-->
-<!--</div>-->
-
-<!--<ng-template #notDone>-->
-  <!--<i class="fa fa-times fa-1x"></i>-->
-<!--</ng-template>-->
+</div>
