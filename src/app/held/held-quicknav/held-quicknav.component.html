@@ -1,0 +1,9 @@
+<div class="ui-g button-row">
+  <button pButton label="Übersicht" (click)="uebersicht()" [disabled]="subroute === 'uebersicht'"></button>
+  <button pButton label="Zauber" *ngIf="zauberButton" (click)="zauber()" [disabled]="subroute === 'zauber'"></button>
+  <button pButton label="Ereignisse" (click)="ereignisse()" [disabled]="subroute === 'ereignisse'"></button>
+  <button pButton label="Inventar" (click)="inventar()" [disabled]="subroute === 'inventar'"></button>
+  <button pButton label="Steigern" (click)="steigern()" [disabled]="subroute === 'steigern'"></button>
+  <button pButton label="Geldbörse" (click)="geld()" [disabled]="subroute === 'geld'"></button>
+
+</div>

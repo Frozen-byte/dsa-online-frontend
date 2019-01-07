@@ -30,9 +30,9 @@ export class HeldenService {
     return this.restService.get('helden/held/' + id + '/' + version)
       .pipe(tap((data) => {
         this.versionInfo = {
-          id, version
+          id, version, edit: data.editable
         }
-        this.held = data;
+        this.held = data.daten;
         this._heldLoaded.next();
       }));
   }
@@ -58,12 +58,46 @@ export class HeldenService {
   }
 
   public getSteigerungen(heldid) {
-    return this.restService.get(`helden/held/${heldid}/steigerungen`);
+    return this.restService.get(`steigern/${heldid}/steigerungen`);
   }
 
   public getInventar(heldid) {
     return this.restService.get(`helden/held/${heldid}/inventar`);
   }
+
+  public removeItem(heldid, index) {
+    return this.restService.delete(`helden/held/${heldid}/inventar/${index}`);
+  }
+
+  public addItem(heldid, name: string, amount: number) {
+    return this.restService.post(`helden/held/${heldid}/inventar/add/${encodeURI(name)}/${amount}`);
+  }
+
+  public changeLernmethode(heldid: number, talent: string, lernmethode: string) {
+    return this.restService.post(`steigern/${heldid}/steigern/lernmethode`, {talent, lernmethode});
+  }
+
+  public steigern(heldid: number, talent: string, aktwert: number) {
+    return this.restService.post(`steigern/${heldid}/steigern/${encodeURI(talent)}/${aktwert}`);
+  }
+
+  public getApUncached(heldid: number) {
+    return this.restService.get(`steigern/${heldid}/ap`);
+  }
+
+  public addEreignis(heldid: number, name: string, ap: number) {
+    return this.restService.post(`steigern/${heldid}/ereignis/${encodeURI(name)}/${ap}`);
+  }
+
+  public getLagerorte(heldid: number) {
+    return this.restService.get(`helden/held/${heldid}/lagerorte`);
+  }
+
+  public addLagerort(heldid: number, lagerort) {
+    return this.restService.post(`helden/held/${heldid}/lagerort`, lagerort);
+  }
+
+
 
 
 }

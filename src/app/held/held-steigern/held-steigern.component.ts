@@ -11,8 +11,33 @@ import {AuthenticationService} from "../../shared/service/authentication/authent
 })
 export class HeldSteigernComponent extends HeldenComponent{
 
+  public name;
+  public amount;
 
+  public loadingAp = true;
+  public ap;
   public steigerungen;
+  public loading = true;
+  public lernmethoden = [
+    {
+      label: 'Selbststudium',
+      value: 'Selbststudium'
+    },
+    {
+      label: 'Gegenseitiges Lehren',
+      value: 'Gegenseitiges Lehren'
+    },
+    {
+      label: 'Lehrmeister',
+      value: 'Lehrmeister'
+
+    },
+    {
+      label: 'Freie Steigerung',
+      value: 'Freie Steigerung'
+
+    }
+    ];
 
   constructor(heldenService: HeldenService, routingService: RoutingService, authenticationService: AuthenticationService) {
     super(heldenService, routingService, authenticationService);
@@ -22,8 +47,57 @@ export class HeldSteigernComponent extends HeldenComponent{
     this.heldenService.getSteigerungen(this.heldenService.versionInfo.id)
       .subscribe(data => {
         this.steigerungen = data;
-        console.debug(data);
-      })
+        this.loading = false;
+      });
+    this.heldenService.getApUncached(this.heldenService.versionInfo.id)
+      .subscribe(data => {
+        this.ap = data;
+        this.loadingAp = false;
+      });
+
   }
+
+  public lernmethodeChange(d, event) {
+    d.loading = true;
+    this.heldenService.changeLernmethode(this.heldenService.versionInfo.id, d.talent, event.value)
+      .subscribe(data => {
+        this.steigerungen = data;
+      });
+  }
+
+  public steigern(data) {
+    data.loading = true;
+    this.loadingAp = true;
+    this.heldenService.steigern(this.heldenService.versionInfo.id, data.talent, data.talentwert)
+      .subscribe(answer => {
+        this.loadingAp = false;
+        this.steigerungen = answer;
+        this.ap.frei -= data.kosten;
+      });
+  }
+
+  public saveEreignis() {
+    this.loadingAp = true;
+    this.heldenService.addEreignis(this.heldenService.versionInfo.id, this.name, parseInt(this.amount, 10))
+      .subscribe(data => {
+        this.ap = data;
+        this.loadingAp = false;
+      });
+  }
+
+  get gesamtap() {
+    if (this.ap) {
+      return this.ap.gesamt;
+    }
+
+
+  }
+
+  get freieap() {
+    if (this.ap) {
+      return this.ap.frei;
+    }
+  }
+
 
 }

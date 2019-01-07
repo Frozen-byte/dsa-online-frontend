@@ -20,12 +20,13 @@ import {
   InputSwitchModule,
   InputTextareaModule,
   InputTextModule,
+  KeyFilterModule,
   MultiSelectModule,
   PanelMenuModule,
   SidebarModule,
   TabMenuModule,
   TooltipModule
-} from "primeng/primeng";
+} from 'primeng/primeng';
 import {AuthenticationService} from './shared/service/authentication/authentication.service';
 import {RestService} from './shared/service/rest/rest.service';
 import {HttpClientModule} from '@angular/common/http';
@@ -78,6 +79,9 @@ import {TablesModule} from "./shared/tables/tables.module";
 import {EditDsaDateModule} from "./edit-dsa-date/edit-dsa-date.module";
 import {HeldSteigernComponent} from './held/held-steigern/held-steigern.component';
 import {HeldInventarComponent} from './held/held-inventar/held-inventar.component';
+import {HeldQuicknavComponent} from './held/held-quicknav/held-quicknav.component';
+import { HeldGeldComponent } from './held/held-geld/held-geld.component';
+import {HeldGeldService} from './held/held-geld/held-geld.service';
 
 
 const appRoutes: Routes = [
@@ -99,6 +103,7 @@ const appRoutes: Routes = [
   { path: 'held/zauber', component: HeldZauberComponent, data: {title: 'Zauber'}},
   { path: 'held/inventar', component: HeldInventarComponent, data: {title: 'Inventar'}},
   { path: 'held/steigern', component: HeldSteigernComponent, data: {title: 'Steigern'}},
+  { path: 'held/geld', component: HeldGeldComponent, data: {title: 'Geld'}},
   { path: 'kalender', component: CalendarComponent, data: {title: 'Kalender'}},
   { path: 'scripts', component: SkriptComponent, data: {title: 'Skripte'}},
   { path: 'scripts/:id', component: SkriptRoutingComponent, data: {title: 'Skripte'}},
@@ -145,10 +150,12 @@ registerLocaleData(localeDe, 'de');
     TableResultComponent,
     SkriptRoutingComponent,
     HeldSteigernComponent,
-    HeldInventarComponent
+    HeldInventarComponent,
+    HeldQuicknavComponent,
+    HeldGeldComponent
   ],
   imports: [
-    BrowserAnimationsModule, MultiSelectModule, FileUploadModule, InputSwitchModule, PanelMenuModule,
+    BrowserAnimationsModule, MultiSelectModule, FileUploadModule, InputSwitchModule, PanelMenuModule, KeyFilterModule,
     BrowserModule, DialogModule, MessageModule, PanelModule, GrowlModule, ReactiveFormsModule, FormsModule, MenuModule, TabMenuModule,
     HttpClientModule, ButtonModule, CheckboxModule, TablesModule, DropdownModule, EditDsaDateModule,
     AccordionModule, PdfViewerModule, InputTextModule, InputTextareaModule, TooltipModule, TableModule,
@@ -160,7 +167,7 @@ registerLocaleData(localeDe, 'de');
     ), CardModule, SidebarModule,
 
   ],
-  providers: [AuthenticationService, RestService, MessageService, VersionService, SessionService, HeldenService, UserService,
+  providers: [AuthenticationService, RestService, MessageService, VersionService, SessionService, HeldenService, UserService, HeldGeldService,
     GruppenService, MenuService, RoutingService, AbenteuerService, AdministrationService
     , { provide: LOCALE_ID, useValue: 'de' }
     ],
